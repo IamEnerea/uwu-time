@@ -79,7 +79,7 @@ client.on(Events.InteractionCreate, async interaction => {
   if (interaction.customId === "start_shift") {
     if (turnos.has(interaction.user.id)) {
       return interaction.reply({
-        content: "🧸 Ya tienes un turno activo, cariño 💗",
+        content: "🧸 Ya tienes un turno activo 🍬",
         ephemeral: true
       });
     }
@@ -87,8 +87,7 @@ client.on(Events.InteractionCreate, async interaction => {
     turnos.set(interaction.user.id, Date.now());
 
     await canalLogs.send(
-      `🧁 **${interaction.user.username}** inició su turno — ${ahora}\n` +
-      `**Uwu Café ☕🎀**`
+      `🧁 **${interaction.user.username}** inició su turno — ${ahora}\n`
     );
 
     return interaction.reply({
@@ -109,8 +108,7 @@ client.on(Events.InteractionCreate, async interaction => {
     turnos.delete(interaction.user.id);
 
     await canalLogs.send(
-      `🍰 **${interaction.user.username}** finalizó su jornada — ${ahora}\n` +
-      `**Uwu Café ☕🎀**`
+      `🍰 **${interaction.user.username}** finalizó su jornada — ${ahora}\n`
     );
 
     return interaction.reply({
