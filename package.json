@@ -1,0 +1,9 @@
+{
+  "name": "uwucafe-timeclub",
+  "version": "1.0.0",
+  "description": "Bot de fichaje del UWU Café ☕🐾",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
