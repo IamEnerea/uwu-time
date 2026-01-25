@@ -114,7 +114,7 @@ client.on(Events.InteractionCreate, async interaction => {
     );
 
     return interaction.reply({
-      content: "🍰 Tu jornada ha sido cerrada con éxito 💗",
+      content: "🍰 Tu jornada ha sido cerrada con éxito 🌸",
       ephemeral: true
     });
   }
