@@ -88,10 +88,16 @@ client.on(Events.InteractionCreate, async interaction => {
 
     turnos.set(interaction.user.id, Date.now());
 
-    await canalLogs.send(
-      `🧁 **${interaction.user.username}** inició su turno — ${ahora}\n` +
-      `**Uwu Café ☕🎀**`
-    );
+   const embedLogInicio = new EmbedBuilder()
+  .setTitle("🧁 Inicio de turno")
+  .setColor(0xF6A5C0)
+  .setDescription(
+    `👤 **Empleado:** ${interaction.user.username}\n` +
+    `🕒 **Hora:** ${ahora}\n\n` +
+    `☕🎀`
+  );
+
+await canalLogs.send({ embeds: [embedLogInicio] });
 
     return interaction.reply({
       content: "🧁 Tu turno ha sido registrado correctamente 💖",
@@ -110,10 +116,16 @@ client.on(Events.InteractionCreate, async interaction => {
 
     turnos.delete(interaction.user.id);
 
-    await canalLogs.send(
-      `🍰 **${interaction.user.username}** finalizó su jornada — ${ahora}\n` +
-      `**Uwu Café ☕🎀**`
-    );
+    const embedLogFin = new EmbedBuilder()
+  .setTitle("🍰 Fin de jornada")
+  .setColor(0xF6A5C0)
+  .setDescription(
+    `👤 **Empleado:** ${interaction.user.username}\n` +
+    `🕒 **Hora:** ${ahora}\n\n` +
+    `☕🎀`
+  );
+
+await canalLogs.send({ embeds: [embedLogFin] });
 
     return interaction.reply({
       content: "🍰 Tu jornada ha sido cerrada con éxito 🌸",
