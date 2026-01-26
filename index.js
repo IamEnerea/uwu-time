@@ -45,6 +45,13 @@ function horaLocal() {
   });
 }
 
+// ================= FORMATO HORAS =================
+function horasYMinutos(decimal) {
+  const horas = Math.floor(decimal);
+  const minutos = Math.round((decimal - horas) * 60);
+  return `${horas} horas ${minutos} minutos`;
+}
+
 // ================= READY =================
 client.once(Events.ClientReady, async () => {
   console.log(`☕🎀 UWU Time está online como ${client.user.tag}`);
@@ -154,7 +161,7 @@ client.on(Events.InteractionCreate, async interaction => {
             .setDescription(
               `👤 **Empleado:** ${interaction.user.username}\n` +
               `🕒 **Hora:** ${horaLocal()}\n` +
-              `⏱️ **Duración:** ${duracion.toFixed(2)} horas\n\n☕🎀`
+              `⏱️ **Duración:** ${horasYMinutos(duracion)}\n\n☕🎀`
             )
         ]
       });
@@ -167,14 +174,17 @@ client.on(Events.InteractionCreate, async interaction => {
   if (interaction.isChatInputCommand()) {
     if (interaction.commandName === "horas") {
       const user = interaction.options.getUser("usuario");
-      const horas = (data.horas[user.id] || 0).toFixed(2);
+      const total = data.horas[user.id] || 0;
 
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setColor(0xF6A5C0)
             .setTitle("⏱️ Horas semanales")
-            .setDescription(`👤 **${user.username}**\n🕒 **Total:** ${horas} horas\n\n☕🎀`)
+            .setDescription(
+              `👤 **${user.username}**\n` +
+              `🕒 **Total:** ${horasYMinutos(total)}\n\n☕🎀`
+            )
         ]
       });
     }
