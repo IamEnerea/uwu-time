@@ -19,8 +19,10 @@ const CANAL_LOGS_ID = "1465075808128209168";
 // Guardamos turnos activos (userId -> timestamp)
 const turnos = new Map();
 
+// 🕒 HORA GUATEMALA
 function horaLocal() {
-  return new Date().toLocaleString("es-PE", {
+  return new Date().toLocaleString("es-GT", {
+    timeZone: "America/Guatemala",
     hour: "2-digit",
     minute: "2-digit",
     day: "2-digit",
@@ -44,11 +46,11 @@ client.once(Events.ClientReady, async () => {
     const embed = new EmbedBuilder()
       .setTitle("Uwu Café ☕🎀")
       .setDescription(
-        "**Registro de horario 🩷**\n" +
-        "Para mantener todo en orden en nuestro local ✨\n\n" +
+        "**Registro de horario 🩷**\n\n" +
+        "Para mantener todo en orden en nuestro local ✨\n" +
         "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
-        "🧁 Inicien su turno\n" +
-        "🍰 Finalicen su jornada\n\n" +
+        "🧁 **Inicien su turno**\n" +
+        "🍰 **Finalicen su jornada**\n\n" +
         "Así podremos llevar un mejor control y brindar siempre la mejor atención 💖\n" +
         "¡Gracias por su dedicación! 🧸"
       )
@@ -87,7 +89,8 @@ client.on(Events.InteractionCreate, async interaction => {
     turnos.set(interaction.user.id, Date.now());
 
     await canalLogs.send(
-      `🧁 **${interaction.user.username}** inició su turno — ${ahora}\n`
+      `🧁 **${interaction.user.username}** inició su turno — ${ahora}\n` +
+      `**Uwu Café ☕🎀**`
     );
 
     return interaction.reply({
@@ -108,7 +111,8 @@ client.on(Events.InteractionCreate, async interaction => {
     turnos.delete(interaction.user.id);
 
     await canalLogs.send(
-      `🍰 **${interaction.user.username}** finalizó su jornada — ${ahora}\n`
+      `🍰 **${interaction.user.username}** finalizó su jornada — ${ahora}\n` +
+      `**Uwu Café ☕🎀**`
     );
 
     return interaction.reply({
