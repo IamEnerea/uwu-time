@@ -92,12 +92,12 @@ client.once(Events.ClientReady, async () => {
   "🍰 **Finalicen su jornada**\n\n" +
 
   "💖 Así podremos llevar un mejor control del servicio\n" +
-  "y brindar siempre la mejor atención a nuestros clientes\n\n" +
+  "y brindar siempre la mejor atención a nuestros clientes 🎀\n\n" +
 
   "──────────────────────────\n\n" +
 
   "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
-  "• El fichaje es **obligatorio** para todo el personal\n\n" +
+  "• El fichaje es **obligatorio** para todo el personal\n" +
   "• Las horas se utilizan para:\n" +
   "  🌸 Ascensos\n" +
   "  🌸 Descensos\n" +
