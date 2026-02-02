@@ -86,7 +86,7 @@ client.once(Events.ClientReady, async () => {
       .setDescription(
   "**Registro de horario 🩷**\n\n" +
   "Para mantener todo en orden en nuestro local ✨\n" +
-  "es **obligatorio registrar correctamente el horario** usando **Uwu Time** cada vez que:\n\n" +
+  "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
 
   "🧁 **Inicien su turno**\n" +
   "🍰 **Finalicen su jornada**\n\n" +
@@ -94,11 +94,11 @@ client.once(Events.ClientReady, async () => {
   "💖 Así podremos llevar un mejor control del servicio\n" +
   "y brindar siempre la mejor atención a nuestros clientes\n\n" +
 
-  "────────────────────\n\n" +
+  "──────────────────────────\n\n" +
 
   "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
   "• El fichaje es **obligatorio** para todo el personal\n" +
-  "• Las horas se utilizan para:\n" +
+  "• Las horas se utilizan para:\n\n" +
   "  🌸 Ascensos\n" +
   "  🌸 Descensos\n" +
   "  🌸 Evaluaciones internas\n\n" +
