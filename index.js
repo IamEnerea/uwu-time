@@ -84,14 +84,30 @@ client.once(Events.ClientReady, async () => {
       .setTitle("Uwu Café ☕🎀")
       .setColor(0xF6A5C0)
       .setDescription(
-        "**Registro de horario 🩷**\n\n" +
-        "Para mantener todo en orden en nuestro local ✨\n" +
-        "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
-        "🧁 **Inicien su turno**\n" +
-        "🍰 **Finalicen su jornada**\n\n" +
-        "Así podremos llevar un mejor control y brindar siempre la mejor atención 💖\n" +
-        "¡Gracias por su dedicación! 🧸"
-      );
+  "**Registro de horario 🩷**\n\n" +
+  "Para mantener todo en orden en nuestro local ✨\n" +
+  "es **obligatorio registrar correctamente el horario** usando **Uwu Time** cada vez que:\n\n" +
+
+  "🧁 **Inicien su turno**\n" +
+  "🍰 **Finalicen su jornada**\n\n" +
+
+  "💖 Así podremos llevar un mejor control del servicio\n" +
+  "y brindar siempre la mejor atención a nuestros clientes\n\n" +
+
+  "────────────────────\n\n" +
+
+  "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
+  "• El fichaje es **obligatorio** para todo el personal\n" +
+  "• Las horas se utilizan para:\n" +
+  "  🌸 Ascensos\n" +
+  "  🌸 Descensos\n" +
+  "  🌸 Evaluaciones internas\n\n" +
+
+  "⚠️ No fichar, fichar incorrectamente o intentar evadir el sistema\n" +
+  "será considerado **falta grave**.\n\n" +
+
+  "¡Gracias por su dedicación! 🧸✨"
+)
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
