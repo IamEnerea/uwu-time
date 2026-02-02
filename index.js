@@ -97,14 +97,16 @@ client.once(Events.ClientReady, async () => {
   "──────────────────────────\n\n" +
 
   "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
-  "• El fichaje es **obligatorio** para todo el personal\n" +
-  "• Las horas se utilizan para:\n\n" +
+  "• El fichaje es **obligatorio** para todo el personal\n\n" +
+  "• Las horas se utilizan para:\n" +
   "  🌸 Ascensos\n" +
   "  🌸 Descensos\n" +
   "  🌸 Evaluaciones internas\n\n" +
 
   "⚠️ No fichar, fichar incorrectamente o intentar evadir el sistema\n" +
   "será considerado **falta grave**.\n\n" +
+
+  "──────────────────────────\n\n" +
 
   "¡Gracias por su dedicación! 🧸✨"
 )
