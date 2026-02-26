@@ -228,4 +228,22 @@ setInterval(() => {
   }
 }, 60000);
 
+// ================= RECONEXIÓN AUTOMÁTICA =================
+process.on('unhandledRejection', (err) => {
+  console.error('Error no manejado:', err);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Excepción no capturada:', err);
+});
+
+client.on('shardDisconnect', (event, shardID) => {
+  console.warn(`Shard ${shardID} desconectado. Intentando reconectar...`);
+  client.login(process.env.TOKEN);
+});
+
+client.on('error', (err) => {
+  console.error('Error del cliente:', err);
+});
+
 client.login(process.env.TOKEN);
