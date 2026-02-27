@@ -12,6 +12,10 @@ const {
 } = require("discord.js");
 
 const fs = require("fs");
+const express = require("express"); // <-- agregado
+
+const app = express(); // <-- agregado
+const PORT = process.env.PORT || 3000; // <-- agregado
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds]
@@ -56,7 +60,6 @@ function horasYMinutos(decimal) {
 client.once(Events.ClientReady, async () => {
   console.log(`☕🎀 UWU Time está online como ${client.user.tag}`);
 
-  // Slash commands
   const commands = [
     new SlashCommandBuilder()
       .setName("horas")
@@ -75,7 +78,6 @@ client.once(Events.ClientReady, async () => {
     { body: commands }
   );
 
-  // Embed fichaje
   const canalFichaje = await client.channels.fetch(CANAL_FICHAJE_ID);
   const mensajes = await canalFichaje.messages.fetch({ limit: 10 });
 
@@ -84,32 +86,25 @@ client.once(Events.ClientReady, async () => {
       .setTitle("Uwu Café ☕🎀")
       .setColor(0xF6A5C0)
       .setDescription(
-  "**Registro de horario 🩷**\n\n" +
-  "Para mantener todo en orden en nuestro local ✨\n" +
-  "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
-
-  "🧁 **Inicien su turno**\n" +
-  "🍰 **Finalicen su jornada**\n\n" +
-
-  "💖 Así podremos llevar un mejor control del servicio\n" +
-  "y brindar siempre la mejor atención a nuestros clientes 🎀\n\n" +
-
-  "──────────────────────────\n\n" +
-
-  "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
-  "• El fichaje es **obligatorio** para todo el personal\n" +
-  "• Las horas se utilizan para:\n" +
-  "  🌸 Ascensos\n" +
-  "  🌸 Descensos\n" +
-  "  🌸 Evaluaciones internas\n\n" +
-
-  "⚠️ No fichar, fichar incorrectamente o intentar evadir el sistema\n" +
-  "será considerado **falta grave**.\n\n" +
-
-  "──────────────────────────\n\n" +
-
-  "¡Gracias por su dedicación! 🧸✨"
-)
+        "**Registro de horario 🩷**\n\n" +
+        "Para mantener todo en orden en nuestro local ✨\n" +
+        "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
+        "🧁 **Inicien su turno**\n" +
+        "🍰 **Finalicen su jornada**\n\n" +
+        "💖 Así podremos llevar un mejor control del servicio\n" +
+        "y brindar siempre la mejor atención a nuestros clientes 🎀\n\n" +
+        "──────────────────────────\n\n" +
+        "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
+        "• El fichaje es **obligatorio** para todo el personal\n" +
+        "• Las horas se utilizan para:\n" +
+        "  🌸 Ascensos\n" +
+        "  🌸 Descensos\n" +
+        "  🌸 Evaluaciones internas\n\n" +
+        "⚠️ No fichar, fichar incorrectamente o intentar evadir el sistema\n" +
+        "será considerado **falta grave**.\n\n" +
+        "──────────────────────────\n\n" +
+        "¡Gracias por su dedicación! 🧸✨"
+      );
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -130,7 +125,6 @@ client.once(Events.ClientReady, async () => {
 client.on(Events.InteractionCreate, async interaction => {
   const canalLogs = await client.channels.fetch(CANAL_LOGS_ID);
 
-  // BOTONES
   if (interaction.isButton()) {
     const ahora = Date.now();
 
@@ -188,7 +182,6 @@ client.on(Events.InteractionCreate, async interaction => {
     }
   }
 
-  // SLASH COMMANDS
   if (interaction.isChatInputCommand()) {
     if (interaction.commandName === "horas") {
       const user = interaction.options.getUser("usuario");
@@ -244,6 +237,15 @@ client.on('shardDisconnect', (event, shardID) => {
 
 client.on('error', (err) => {
   console.error('Error del cliente:', err);
+});
+
+// ================= MINI SERVER PARA PING =================
+app.get("/", (req, res) => {
+  res.send("UWU Time awake 💖");
+});
+
+app.listen(PORT, () => {
+  console.log(`Ping server activo en puerto ${PORT}`);
 });
 
 client.login(process.env.TOKEN);
