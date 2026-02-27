@@ -12,10 +12,10 @@ const {
 } = require("discord.js");
 
 const fs = require("fs");
-const express = require("express"); // <-- agregado
+const express = require("express");
 
-const app = express(); // <-- agregado
-const PORT = process.env.PORT || 3000; // <-- agregado
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds]
@@ -85,26 +85,7 @@ client.once(Events.ClientReady, async () => {
     const embed = new EmbedBuilder()
       .setTitle("Uwu Café ☕🎀")
       .setColor(0xF6A5C0)
-      .setDescription(
-        "**Registro de horario 🩷**\n\n" +
-        "Para mantener todo en orden en nuestro local ✨\n" +
-        "Les pedimos que fichen aquí su horario cada vez que:\n\n" +
-        "🧁 **Inicien su turno**\n" +
-        "🍰 **Finalicen su jornada**\n\n" +
-        "💖 Así podremos llevar un mejor control del servicio\n" +
-        "y brindar siempre la mejor atención a nuestros clientes 🎀\n\n" +
-        "──────────────────────────\n\n" +
-        "🕒 **IMPORTANTE — SISTEMA DE HORARIOS**\n\n" +
-        "• El fichaje es **obligatorio** para todo el personal\n" +
-        "• Las horas se utilizan para:\n" +
-        "  🌸 Ascensos\n" +
-        "  🌸 Descensos\n" +
-        "  🌸 Evaluaciones internas\n\n" +
-        "⚠️ No fichar, fichar incorrectamente o intentar evadir el sistema\n" +
-        "será considerado **falta grave**.\n\n" +
-        "──────────────────────────\n\n" +
-        "¡Gracias por su dedicación! 🧸✨"
-      );
+      .setDescription("Usa los botones para registrar tu turno 💖");
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
@@ -123,14 +104,19 @@ client.once(Events.ClientReady, async () => {
 
 // ================= INTERACTIONS =================
 client.on(Events.InteractionCreate, async interaction => {
-  const canalLogs = await client.channels.fetch(CANAL_LOGS_ID);
 
+  // ================= BOTONES =================
   if (interaction.isButton()) {
+
+    await interaction.deferReply({ flags: 64 });
+
+    const canalLogs = await client.channels.fetch(CANAL_LOGS_ID);
     const ahora = Date.now();
 
     if (interaction.customId === "start_shift") {
+
       if (data.turnos[interaction.user.id]) {
-        return interaction.reply({ content: "🧸 Ya tienes un turno activo 🍬", ephemeral: true });
+        return interaction.editReply("🧸 Ya tienes un turno activo 🍬");
       }
 
       data.turnos[interaction.user.id] = ahora;
@@ -148,13 +134,15 @@ client.on(Events.InteractionCreate, async interaction => {
         ]
       });
 
-      return interaction.reply({ content: "🧁 Tu turno ha sido registrado correctamente 💖", ephemeral: true });
+      return interaction.editReply("🧁 Tu turno ha sido registrado correctamente 💖");
     }
 
     if (interaction.customId === "end_shift") {
+
       const inicio = data.turnos[interaction.user.id];
+
       if (!inicio) {
-        return interaction.reply({ content: "🍰 No tienes un turno activo 🧸", ephemeral: true });
+        return interaction.editReply("🍰 No tienes un turno activo 🧸");
       }
 
       const duracion = (ahora - inicio) / 3600000;
@@ -178,16 +166,21 @@ client.on(Events.InteractionCreate, async interaction => {
         ]
       });
 
-      return interaction.reply({ content: "🍰 Tu jornada ha sido cerrada con éxito 🌸", ephemeral: true });
+      return interaction.editReply("🍰 Tu jornada ha sido cerrada con éxito 🌸");
     }
   }
 
+  // ================= SLASH COMMANDS =================
   if (interaction.isChatInputCommand()) {
+
+    await interaction.deferReply();
+
     if (interaction.commandName === "horas") {
+
       const user = interaction.options.getUser("usuario");
       const total = data.horas[user.id] || 0;
 
-      return interaction.reply({
+      return interaction.editReply({
         embeds: [
           new EmbedBuilder()
             .setColor(0xF6A5C0)
@@ -203,43 +196,13 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.commandName === "reiniciar_horas") {
       data.horas = {};
       guardarData();
-      return interaction.reply("🔄 Horas semanales reiniciadas correctamente ☕🎀");
+      return interaction.editReply("🔄 Horas semanales reiniciadas correctamente ☕🎀");
     }
   }
+
 });
 
-// ================= REINICIO AUTOMÁTICO =================
-setInterval(() => {
-  const ahora = new Date().toLocaleString("en-US", {
-    timeZone: "America/Guatemala"
-  });
-  const d = new Date(ahora);
-
-  if (d.getDay() === 1 && d.getHours() === 0 && d.getMinutes() === 0) {
-    data.horas = {};
-    guardarData();
-  }
-}, 60000);
-
-// ================= RECONEXIÓN AUTOMÁTICA =================
-process.on('unhandledRejection', (err) => {
-  console.error('Error no manejado:', err);
-});
-
-process.on('uncaughtException', (err) => {
-  console.error('Excepción no capturada:', err);
-});
-
-client.on('shardDisconnect', (event, shardID) => {
-  console.warn(`Shard ${shardID} desconectado. Intentando reconectar...`);
-  client.login(process.env.TOKEN);
-});
-
-client.on('error', (err) => {
-  console.error('Error del cliente:', err);
-});
-
-// ================= MINI SERVER PARA PING =================
+// ================= MINI SERVER =================
 app.get("/", (req, res) => {
   res.send("UWU Time awake 💖");
 });
