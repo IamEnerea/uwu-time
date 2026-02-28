@@ -211,4 +211,4 @@ app.listen(PORT, () => {
   console.log(`Ping server activo en puerto ${PORT}`);
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.TIME_TOKEN);
