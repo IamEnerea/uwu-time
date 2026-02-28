@@ -12,10 +12,6 @@ const {
 } = require("discord.js");
 
 const fs = require("fs");
-const express = require("express");
-
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds]
@@ -203,12 +199,5 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 // ================= MINI SERVER =================
-app.get("/", (req, res) => {
-  res.send("UWU Time awake 💖");
-});
-
-app.listen(PORT, () => {
-  console.log(`Ping server activo en puerto ${PORT}`);
-});
 
 client.login(process.env.TIME_TOKEN);
